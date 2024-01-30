@@ -1,8 +1,8 @@
-5574b4fb94020c0955fb62cd23eb10bb *DESCRIPTION
-c1ea0a87528351465161697be4df2a54 *LICENSE
+f8802091c8341bcc4b1210e78921c578 *DESCRIPTION
+65f1afc4148fc8dd0929a4c16dee81fe *LICENSE
 7bbd67e30d2b46c76de789712ca43b91 *NAMESPACE
-8903678d43074b91827d29823f38c1f4 *NEWS.md
-669903995c6d9db88768afc04fabe1db *R/adhoc-imports.R
+33cfaeb02ac91cd0af83f00aff32aeca *NEWS.md
+80f193decf1f42484c20c160bc6a0a51 *R/adhoc-imports.R
 e34c92abe0313f7f2f9b0ca2431447d3 *R/baker.R
 8cb398bae58f3e919660e68875f5333e *R/clean-perch-data.R
 079fba42ee91c8ce4b300683066de2e4 *R/compute_functionals_of_model.R
@@ -16,9 +16,9 @@ c5dba3574e1e23013cc38ff66fbb87d8 *R/plot-model-check.R
 db6e4b53fea338420e2f134f609afd3e *R/set-prior.R
 ebf034b79fa08fe2e4aa1b487ca88195 *R/simulate-nplcm.R
 701c6159085c1890def0ee8232574645 *R/summarize_results.R
-4b5a75ae402c9cfbee68f81ffa9b5230 *R/utils.R
+a6732806cbf6f2c4fa9c67fe08ef931b *R/utils.R
 e55de9c175c1a8519ea1b497b867d494 *R/write-model.R
-481f7f932ed510dfcbc01a6d35f1d967 *README.md
+bdbfb278e1ae1d2ecd5c064f88a336bc *README.md
 fb43034471f6e68c60f0f4ebd242cb2b *build/vignette.rds
 77b99cf0dc1fe22706f75e55da67109f *data/data_nplcm_noreg.rda
 4f37117594450682c3d5f352b6a88620 *data/data_nplcm_reg_nest.rda
@@ -28,7 +28,7 @@ fb43034471f6e68c60f0f4ebd242cb2b *build/vignette.rds
 ca07b99a2febcf2f2c97831ad402cf68 *inst/WORDLIST
 be582cd5dec844af68606293fba9722e *inst/doc/baker_demo.R
 e46804591243036b0cab998a3649b0eb *inst/doc/baker_demo.Rmd
-2bfe6f9678a3851bd4ef3b140a6eb1c6 *inst/doc/baker_demo.html
+a6157d764dc408f3a3eaca2303a62d93 *inst/doc/baker_demo.html
 a98c2320a5975aa6fe9048488c28bd77 *inst/example/plot_associations.R
 5b955e29072eee7ee84083ab80631ccb *inst/example/simulate_data_example_nplcm_noreg.R
 c745e9253a718be4f8431ae7d215dd27 *inst/example/simulate_data_example_nplcm_reg_nest.R
