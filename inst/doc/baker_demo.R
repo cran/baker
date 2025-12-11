@@ -153,74 +153,74 @@ model_options <- m_opt1
 assign_model(model_options,data_nplcm)
 
 ## ----dofit, eval=FALSE--------------------------------------------------------
-#  # date stamp for analysis:
-#  Date     <- gsub("-", "_", Sys.Date())
-#  # include stratification information in file name:
-#  dated_strat_name    <- file.path(working_dir,
-#                                   paste0("scn_",scn,"_mixiter_",iter))
-#  if (dir.exists(dated_strat_name)) {
-#    unlink(dated_strat_name, force = TRUE)
-#  }
-#  
-#  # create folder
-#  dir.create(dated_strat_name)
-#  fullname <- dated_strat_name
-#  
-#  # for finer scenarios, e.g., different types of analysis applicable to the
-#  # same data set. Here we just perform one analysis:
-#  result_folder <- file.path(
-#    fullname,
-#    paste0("rep_", rep, "_kfit_",
-#           model_options$likelihood$k_subclass))
-#  dir.create(result_folder)
-#  
-#  
-#  # options for MCMC chains:
-#  mcmc_options <- list(
-#    individual.pred = !TRUE,
-#    ppd             = TRUE,
-#    n.chains   = 1,
-#    n.itermcmc = as.integer(200), #50000
-#    n.burnin   = as.integer(100), #10000
-#    n.thin     = 1, #50
-#    result.folder = result_folder,
-#    bugsmodel.dir = result_folder
-#  )
-#  
-#  # Record the settings of current analysis:
-#  # data clean options:
-#  fname = file.path(
-#    "example_data",
-#    "pathogen_category_simulation.csv")
-#  fname = system.file(
-#    fname,
-#    package = "baker")
-#  global_patho_taxo_dir = fname
-#  
-#  clean_options <- list(
-#    BrS_objects        =  make_list(BrS_object_1),         # <---- all bronze-standard measurements.
-#    patho_taxo_dir = global_patho_taxo_dir,
-#    allow_missing      = FALSE)
-#  
-#  # place the nplcm data and cleaning options into the results folder
-#  dput(data_nplcm,file.path(mcmc_options$result.folder,"data_nplcm.txt"))
-#  dput(clean_options,file.path(mcmc_options$result.folder,"data_clean_options.txt"))
-#  
-#  gs <- nplcm(data_nplcm, model_options, mcmc_options)
+# # date stamp for analysis:
+# Date     <- gsub("-", "_", Sys.Date())
+# # include stratification information in file name:
+# dated_strat_name    <- file.path(working_dir,
+#                                  paste0("scn_",scn,"_mixiter_",iter))
+# if (dir.exists(dated_strat_name)) {
+#   unlink(dated_strat_name, force = TRUE)
+# }
+# 
+# # create folder
+# dir.create(dated_strat_name)
+# fullname <- dated_strat_name
+# 
+# # for finer scenarios, e.g., different types of analysis applicable to the
+# # same data set. Here we just perform one analysis:
+# result_folder <- file.path(
+#   fullname,
+#   paste0("rep_", rep, "_kfit_",
+#          model_options$likelihood$k_subclass))
+# dir.create(result_folder)
+# 
+# 
+# # options for MCMC chains:
+# mcmc_options <- list(
+#   individual.pred = !TRUE,
+#   ppd             = TRUE,
+#   n.chains   = 1,
+#   n.itermcmc = as.integer(200), #50000
+#   n.burnin   = as.integer(100), #10000
+#   n.thin     = 1, #50
+#   result.folder = result_folder,
+#   bugsmodel.dir = result_folder
+# )
+# 
+# # Record the settings of current analysis:
+# # data clean options:
+# fname = file.path(
+#   "example_data",
+#   "pathogen_category_simulation.csv")
+# fname = system.file(
+#   fname,
+#   package = "baker")
+# global_patho_taxo_dir = fname
+# 
+# clean_options <- list(
+#   BrS_objects        =  make_list(BrS_object_1),         # <---- all bronze-standard measurements.
+#   patho_taxo_dir = global_patho_taxo_dir,
+#   allow_missing      = FALSE)
+# 
+# # place the nplcm data and cleaning options into the results folder
+# dput(data_nplcm,file.path(mcmc_options$result.folder,"data_nplcm.txt"))
+# dput(clean_options,file.path(mcmc_options$result.folder,"data_clean_options.txt"))
+# 
+# gs <- nplcm(data_nplcm, model_options, mcmc_options)
 
 ## ----dovizsetup,eval=FALSE----------------------------------------------------
-#  result_folder <- mcmc_options$result.folder
+# result_folder <- mcmc_options$result.folder
 
 ## ----lkpan,fig.height=10, fig.width=10, eval=FALSE----------------------------
-#  suppressWarnings(plot(gs, bg_color = NULL))
+# suppressWarnings(plot(gs, bg_color = NULL))
 
 ## ----lkpan2,fig.height=10, fig.width=10, eval=FALSE---------------------------
-#  plot(gs, bg_color = NULL, select_latent = c("A","C"), exact = TRUE)
+# plot(gs, bg_color = NULL, select_latent = c("A","C"), exact = TRUE)
 
 ## ----doSLORD,fig.height=10, fig.width=10, eval=FALSE--------------------------
-#  plot_check_pairwise_SLORD(result_folder, slice=1)
+# plot_check_pairwise_SLORD(result_folder, slice=1)
 
 ## ----doobsf,fig.height=10, fig.width=10, eval=FALSE---------------------------
-#  dir_list <- as.list(c(result_folder))
-#  plot_check_common_pattern(dir_list,slice_vec =c(1,1))
+# dir_list <- as.list(c(result_folder))
+# plot_check_common_pattern(dir_list,slice_vec =c(1,1))
 

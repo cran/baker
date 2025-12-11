@@ -169,12 +169,18 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("set_prior_tpr","set_prio
 #' 
 #' 
 #' set.seed(1)
+#' 
+#' run_example <- function(){
 #' # include stratification information in file name:
-#' thedir    <- paste0(tempdir(),"_no_reg")
+#' thedir0    <- paste0(tempdir(),"_no_reg")
 #' 
 #' # create folders to store the model results 
-#' dir.create(thedir, showWarnings = FALSE)
-#' result_folder_no_reg <- file.path(thedir,paste("results",collapse="_"))
+#' dir.create(thedir0, showWarnings = FALSE)
+#' # remove the temp folder on exit:
+#' # add = TRUE ensures you don't overwrite other exit handlers
+#' on.exit(unlink(thedir0, recursive = TRUE), add = TRUE) 
+#' 
+#' result_folder_no_reg <- file.path(thedir0,paste("results",collapse="_"))
 #' thedir <- result_folder_no_reg
 #' dir.create(thedir, showWarnings = FALSE)
 #' 
@@ -203,7 +209,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("set_prior_tpr","set_prio
 #' 
 #' nplcm_noreg <- nplcm(data_nplcm_noreg,model_options_no_reg,mcmc_options_no_reg)
 #' 
-#' 
+#' }
+#' run_example()
 #' }
 #' 
 #' 
@@ -704,6 +711,8 @@ nplcm_fit_NoReg<-
       template_SS_list <- lapply(patho_SS_list,make_template,cause_list)
       
       for (s in seq_along(template_SS_list)){
+        if (nrow(Mobs$MSS[[s]])==0){stop(paste0("==[baker] Silver-standard (SS) slice ", names(data_nplcm$Mobs$MSS)[s], 
+                                                " has zero rows of data. Check if you accidentally removed all rows in this SS data slice.==\n"))}
         if (sum(template_SS_list[[s]])==0){
           warning(paste0("==[baker] Silver-standard slice ", names(data_nplcm$Mobs$MSS)[s], 
                          " has no measurements informative of the causes! Please check if measurements' columns correspond to causes.==\n"))  
@@ -1065,10 +1074,7 @@ init_latent_jags_multipleSS <- function(MSS_list,cause_list,
   }
   if (sum(is.na(res[ind_positive]))>0){ # <--- corrected to add res[].
     ind_NA <- which(is.na(res))
-    stop(paste0("==[baker] Case(s) The ",paste(ind_NA,collapse=", "), "-th subject(s) have positive silver-standard
-                measurements on causative agent combinations that are not specified in the 'cause_list' of 
-                'model_options$likelihood'! Please consider 1) deleting these cases,
-                or 2) adding these combinations into 'cause_list'.==\n"))
+    stop(paste0("==[baker] Case(s) The ",paste(ind_NA,collapse=", "), "-th subject(s) have positive silver-standard measurements on causative agent combinations that are not specified in the 'cause_list' of 'model_options$likelihood'! Please consider 1) deleting these cases, or 2) adding these combinations into 'cause_list'.==\n"))
   }
   res
 }
@@ -1301,7 +1307,7 @@ nplcm_fit_Reg_discrete_predictor_NoNest <-
         alpha_mat[[i]] <- matrix(NA, nrow=GBrS_TPR_curr,ncol=JBrS_list[[i]])
         beta_mat[[i]]  <- matrix(NA, nrow=GBrS_TPR_curr,ncol=JBrS_list[[i]])
         
-        colnames(alpha_mat[[i]]) <- patho_BrS_list[[i]]
+        colnames(alpha_mat[[i]]) <- patho_BrS_list[[i]] 
         colnames(beta_mat[[i]]) <- patho_BrS_list[[i]]
         
         for (g in 1:GBrS_TPR_curr){
@@ -1310,6 +1316,9 @@ nplcm_fit_Reg_discrete_predictor_NoNest <-
         }
         
         if (GBrS_TPR_curr>1){
+          
+          ## <-- this produces .dimnames attribute, and may cause problem in jagsdata.txt readin.
+          
           assign(paste("alphaB", i, sep = "_"), alpha_mat[[i]])      # <---- input BrS TPR prior here.
           assign(paste("betaB", i, sep = "_"),  beta_mat[[i]])    
         }else{
@@ -1427,6 +1436,8 @@ nplcm_fit_Reg_discrete_predictor_NoNest <-
       template_SS_list <- lapply(patho_SS_list,make_template,cause_list)
       
       for (s in seq_along(template_SS_list)){
+        if (nrow(Mobs$MSS[[s]])==0){stop(paste0("==[baker] Silver-standard (SS) slice ", names(data_nplcm$Mobs$MSS)[s], 
+                                                " has zero rows of data. Check if you accidentally removed all rows in this SS data slice.==\n"))}
         if (sum(template_SS_list[[s]])==0){
           warning(paste0("==[baker] Silver-standard slice ", names(data_nplcm$Mobs$MSS)[s], 
                          " has no measurements informative of the causes! Please check if measurements' columns correspond to causes.==\n"))  
@@ -1903,7 +1914,8 @@ nplcm_fit_Reg_NoNest <-
       template_BrS_list <- lapply(patho_BrS_list,make_template,cause_list)
       for (s in seq_along(template_BrS_list)){
         if (sum(template_BrS_list[[s]])==0){
-          warning(paste0("==[baker] Bronze-standard slice ", names(data_nplcm$Mobs$MBS)[s], " has no measurements informative of the causes! Please check if measurements' columns correspond to causes.=="))  
+          warning(paste0("==[baker] Bronze-standard slice ", names(data_nplcm$Mobs$MBS)[s], 
+                         " has no measurements informative of the causes! Please check if measurements' columns correspond to causes.=="))  
         }
       }
       
@@ -2850,6 +2862,8 @@ nplcm_fit_Reg_Nest <- function(data_nplcm,model_options,mcmc_options){
     template_SS_list <- lapply(patho_SS_list,make_template,cause_list)
     
     for (s in seq_along(template_SS_list)){
+      if (nrow(Mobs$MSS[[s]])==0){stop(paste0("==[baker] Silver-standard (SS) slice ", names(data_nplcm$Mobs$MSS)[s], 
+                                              " has zero rows of data. Check if you accidentally removed all rows in this SS data slice.==\n"))}
       if (sum(template_SS_list[[s]])==0){
         warning(paste0("==[baker] Silver-standard slice ", names(data_nplcm$Mobs$MSS)[s], 
                        " has no measurements informative of the causes! Please check if measurements' columns correspond to causes.==\n"))  
